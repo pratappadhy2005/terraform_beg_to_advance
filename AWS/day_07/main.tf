@@ -1,17 +1,8 @@
-terraform {
-
-
-}
-
 # create s3 bucket
 resource "aws_s3_bucket" "first_bucket" {
   bucket = local.bucket_name
 
-  tags = {
-    Name          = local.bucket_name
-    Environment   = var.environment
-    Documentation = "https://www.terraform.io/docs/providers/aws/r/s3_bucket.html"
-  }
+  tags = var.tags
 }
 
 #create a vpc
@@ -27,15 +18,12 @@ resource "aws_vpc" "example" {
 resource "aws_instance" "example" {
   count                       = var.instance_count
   ami                         = "ami-0b3c832b6b7289e44"
-  instance_type               = "t2.micro"
-  region                      = var.region
+  instance_type               = var.allow_vm_types[count.index]
+  region                      = tolist(var.allowed_regions)[count.index]
   monitoring                  = var.monitoring
   associate_public_ip_address = var.associate_public_ip_address
 
-  tags = {
-    Name        = "${var.environment}-EC2"
-    Environment = var.environment
-  }
+  tags = var.tags
 }
 
 resource "aws_security_group" "allow_tls" {
@@ -43,23 +31,20 @@ resource "aws_security_group" "allow_tls" {
   description = "Security group for ${var.environment} environment"
   vpc_id      = aws_vpc.example.id
 
-  tags = {
-    Name        = "allow-tls"
-    Environment = var.environment
-  }
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls" {
   security_group_id = aws_security_group.allow_tls.id
-  cidr_ipv4         = var.cidr_block[0]
-  ip_protocol       = "tcp"
-  from_port         = 443
-  to_port           = 443
+  cidr_ipv4         = var.ingress_rules[0]
+  ip_protocol       = var.ingress_rules[1]
+  from_port         = var.ingress_rules[2]
+  to_port           = var.ingress_rules[3]
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all" {
   security_group_id = aws_security_group.allow_tls.id
-  cidr_ipv4         = var.cidr_block[0]
+  cidr_ipv4         = var.ingress_rules[0]
   ip_protocol       = "-1"
   from_port         = 0
   to_port           = 0
