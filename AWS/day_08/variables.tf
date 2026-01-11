@@ -119,3 +119,9 @@ variable "bucket_name" {
   description = "The name of the S3 bucket"
   type        = list(string)
 }
+
+variable "bucket_name_set" {
+  default     = ["my-unique-day09-bucket", "my-unique-day09-bucket-2"]
+  description = "The name of the S3 bucket"
+  type        = set(string)
+}
