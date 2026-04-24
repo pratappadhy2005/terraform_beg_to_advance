@@ -13,7 +13,7 @@ terraform {
 
 
 resource "aws_vpc" "exammy_vpc" {
-  count            = 1
+  count            = terraform.workspace == "dev" ? 1 : 0
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
 
@@ -27,6 +27,6 @@ resource "aws_vpc" "exammy_vpc" {
 }
 
 
-output "vpc_id" {
-  value = aws_vpc.exammy_vpc.id
-}
+# output "vpc_id" {
+#   value = aws_vpc.exammy_vpc.id
+# }
