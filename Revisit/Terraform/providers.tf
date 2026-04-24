@@ -18,7 +18,7 @@ resource "aws_vpc" "exammy_vpc" {
 
   tags = {
     Name        = "PratapVPC"
-    Environment = "Dev"
+    Environment = "${terraform.workspace}"
     Owner       = "Pratap"
     Project     = "Terraform"
     Team        = "DevOps"
