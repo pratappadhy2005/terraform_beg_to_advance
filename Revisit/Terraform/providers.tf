@@ -13,6 +13,7 @@ terraform {
 
 
 resource "aws_vpc" "exammy_vpc" {
+  count            = 1
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
 
