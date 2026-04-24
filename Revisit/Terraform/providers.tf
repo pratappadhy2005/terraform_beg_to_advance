@@ -12,20 +12,20 @@ terraform {
 }
 
 
-# resource "aws_vpc" "exammy_vpc" {
-#   cidr_block       = "10.0.0.0/16"
-#   instance_tenancy = "default"
+resource "aws_vpc" "exammy_vpc" {
+  cidr_block       = var.vpc_cidr
+  instance_tenancy = "default"
 
-#   tags = {
-#     Name        = "PratapVPC"
-#     Environment = "Dev"
-#     Owner       = "Pratap"
-#     Project     = "Terraform"
-#     Team        = "DevOps"
-#   }
-# }
+  tags = {
+    Name        = "PratapVPC"
+    Environment = "Dev"
+    Owner       = "Pratap"
+    Project     = "Terraform"
+    Team        = "DevOps"
+  }
+}
 
 
-# output "vpc_id" {
-#   value = aws_vpc.exammy_vpc.id
-# }
+output "vpc_id" {
+  value = aws_vpc.exammy_vpc.id
+}
