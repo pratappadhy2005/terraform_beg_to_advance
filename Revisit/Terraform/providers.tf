@@ -11,20 +11,27 @@ terraform {
   }
 }
 
-
-resource "aws_vpc" "exammy_vpc" {
-  count            = terraform.workspace == "dev" ? 1 : 0
-  cidr_block       = var.vpc_cidr
-  instance_tenancy = "default"
-
+#tf import aws_vpc.main vpc-0ee29614e3f51077a
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0/16"
   tags = {
-    Name        = "${locals.vpc_name}"
-    Environment = "${terraform.workspace}"
-    Owner       = "Pratap"
-    Project     = "Terraform"
-    Team        = "DevOps"
+    Name = "prata-vpc"
   }
 }
+
+# resource "aws_vpc" "exammy_vpc" {
+#   count            = terraform.workspace == "dev" ? 1 : 0
+#   cidr_block       = var.vpc_cidr
+#   instance_tenancy = "default"
+
+#   tags = {
+#     Name        = "${locals.vpc_name}"
+#     Environment = "${terraform.workspace}"
+#     Owner       = "Pratap"
+#     Project     = "Terraform"
+#     Team        = "DevOps"
+#   }
+# }
 
 
 # output "vpc_id" {
