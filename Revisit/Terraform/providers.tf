@@ -12,12 +12,12 @@ terraform {
 }
 
 #tf import aws_vpc.main vpc-0ee29614e3f51077a
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0/16"
-  tags = {
-    Name = "prata-vpc"
-  }
-}
+# resource "aws_vpc" "main" {
+#   cidr_block = "10.0.0.0/16"
+#   tags = {
+#     Name = "prata-vpc"
+#   }
+# }
 
 # resource "aws_vpc" "exammy_vpc" {
 #   count            = terraform.workspace == "dev" ? 1 : 0
