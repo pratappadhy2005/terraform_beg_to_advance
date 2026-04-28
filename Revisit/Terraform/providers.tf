@@ -18,7 +18,7 @@ resource "aws_vpc" "exammy_vpc" {
   instance_tenancy = "default"
 
   tags = {
-    Name        = "PratapVPC"
+    Name        = "${locals.vpc_name}"
     Environment = "${terraform.workspace}"
     Owner       = "Pratap"
     Project     = "Terraform"
